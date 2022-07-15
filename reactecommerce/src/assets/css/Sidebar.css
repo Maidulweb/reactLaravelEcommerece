@@ -1,0 +1,12 @@
+.sidebar {
+    padding: 30px 60px 30px 80px;
+    background-color: rgba(248,249,250,1);
+    height: 100vh;
+}
+.home-btn {
+    background-color: transparent;
+}
+.home-btn-ul {
+    padding-left: 50px;
+    padding-top: 6px;
+}
