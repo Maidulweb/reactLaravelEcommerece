@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import '../assets/css/Main.css';
 
 const Register = () => {
+    const navigate = useNavigate();
    const [registerState, setRegister] = useState({
     name : '',
     email : '',
@@ -12,11 +14,7 @@ const Register = () => {
    })
 
    const handleInput = (e)=>{
-    e.preventDefault()
-    setRegister({
-        ...registerState,
-        [e.target.name]:e.target.value
-    })
+    setRegister({...registerState,[e.target.name]:e.target.value})
    }
 
    const data = {
@@ -27,14 +25,21 @@ const Register = () => {
 
    const registerSubmit = (e) => {
     e.preventDefault();
-      axios.post('http://localhost:8000/api/register', data)
-                 .then (res =>{
-                     if( res.data.status === 200) {
-                       console.log('ok')
-                     }else {
-                        console.log('Error!!!!!!!!!!')
-                     }
-                 })
+    axios.get('/sanctum/csrf-cookie').then(response => {
+        axios.post('/api/register', data)
+        .then (res =>{
+            if( res.data.status === 200) {
+                localStorage.setItem('new_token', res.data.token);
+                navigate('/login');
+            }else {
+               console.log('Error!!!!!!!!!!')
+            }
+        })
+        .catch (error=>{
+            console.log('axios Error!!!!!!!!!!')
+        })
+    });
+      
    }
 
     return (
@@ -48,15 +53,15 @@ const Register = () => {
                 <form onSubmit={registerSubmit} className='all-form'>
                 <div className="mb-3">
                         <label className="form-label">Name</label>
-                        <input name='name' onChange={handleInput} type="text" className="form-control"/>
+                        <input name='name' onChange={handleInput} value={registerState.name} type="text" className="form-control"/>
                     </div>
                     <div className="mb-3">
                         <label className="form-label">Email address</label>
-                        <input name='email' onChange={handleInput} type="email" className="form-control"/>
+                        <input name='email' onChange={handleInput} value={registerState.email} type="email" className="form-control"/>
                     </div>
                     <div className="mb-3">
                         <label className="form-label">Password</label>
-                        <input name='password' onChange={handleInput} type="password" className="form-control"/>
+                        <input name='password' onChange={handleInput} value={registerState.password} type="password" className="form-control"/>
                     </div>
                     <button type="submit" className="btn btn-primary">Submit</button>
                 </form>
