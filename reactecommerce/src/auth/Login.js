@@ -29,7 +29,7 @@ const Login = () => {
             axios.post('/api/login', data)
             .then (res =>{
                 if( res.data.status === 200) {
-                    localStorage.setItem('token', res.data.token);
+                    localStorage.setItem('auth_token', res.data.token);
                     navigate('/');
                 }else {
                    console.log('The provided credentials are incorrect!!!!!')
@@ -44,12 +44,6 @@ const Login = () => {
        
     return (
         <div>
-           <Header />
-           <div className='row'>
-            <div className='col-md-3'>
-                <Sidebar />
-            </div>
-            <div className='col-md-9'>
                 <form onSubmit={loginSubmit} className='all-form'>
                     <div className="mb-3">
                         <label className="form-label">Email address</label>
@@ -61,8 +55,6 @@ const Login = () => {
                     </div>
                     <button type="submit" className="btn btn-primary">Submit</button>
                 </form>
-            </div>
-           </div>
         </div>
     );
 };

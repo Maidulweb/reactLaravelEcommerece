@@ -34,8 +34,8 @@ class AuthController extends Controller
             'status' => 200,
             'token' => $token,
         ]);
-
     }
+
     public function login (Request $request){
         $validator = Validator::make($request->all(), [
             'email' => 'required',
@@ -64,6 +64,16 @@ class AuthController extends Controller
             'token' => $token,
         ]);
 
+    }
+
+    public function logout (){
+
+        Auth::user()->tokens()->delete();
+         
+        return response()->json([
+            'status' => 200,
+            'success' => 'Logout Successfully'
+        ]);
     }
 
 

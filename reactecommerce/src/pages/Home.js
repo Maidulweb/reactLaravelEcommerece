@@ -1,7 +1,8 @@
 import React from 'react';
-import Content from '../components/Content';
+import { Outlet } from 'react-router-dom';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
+import Content from '../components/Content';
 const Home = () => {
     return (
         <div>
@@ -11,7 +12,7 @@ const Home = () => {
                 <Sidebar />
             </div>
             <div className='col-md-9'>
-                <Content />
+            <Outlet />
             </div>
            </div>
         </div>

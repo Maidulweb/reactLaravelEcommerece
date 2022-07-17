@@ -29,7 +29,7 @@ const Register = () => {
         axios.post('/api/register', data)
         .then (res =>{
             if( res.data.status === 200) {
-                localStorage.setItem('new_token', res.data.token);
+                localStorage.setItem('auth_token', res.data.token);
                 navigate('/login');
             }else {
                console.log('Error!!!!!!!!!!')
@@ -44,12 +44,7 @@ const Register = () => {
 
     return (
         <div>
-             <Header />
-           <div className='row'>
-            <div className='col-md-3'>
-                <Sidebar />
-            </div>
-            <div className='col-md-9'>
+         
                 <form onSubmit={registerSubmit} className='all-form'>
                 <div className="mb-3">
                         <label className="form-label">Name</label>
@@ -65,8 +60,6 @@ const Register = () => {
                     </div>
                     <button type="submit" className="btn btn-primary">Submit</button>
                 </form>
-            </div>
-           </div>
         </div>
     );
 };
